@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piñata</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <div id="wrap">
+        <div class="pinata__container">
+            <div class="pinata__wrap">
+                <span class="line"></span>
+                <div class="pinata">
+                    <div class="part_1"></div>
+                    <div class="part_2"></div>
+                </div>
+                <div class="candy"></div>
+            </div>
+            <!-- <p class="result"></p> -->
+        </div>
+    </div>
+
+    <script>
+        const $pinataWrap = document.querySelector(".pinata__wrap");
+        const $pinata = document.querySelector(".pinata");
+        const $candy = document.querySelector(".candy");
+
+        let count = 0;
+        $pinata.addEventListener("click",function(){
+            if(count<30){
+                action();
+            }
+            count++;
+
+
+            if(count === 10){
+                $pinata.classList.add("action-1");
+            } else if(count === 20){
+                $pinata.classList.remove("action-1");
+                $pinata.classList.add("action-2");
+            } else if(count === 30){
+                $pinataWrap.classList.add("active");
+                $pinata.classList.remove("action-2");
+                $pinata.classList.add("action-3");
+                $candy.classList.add("action-3");
+                $pinataWrap.classList.remove("active");
+
+            }
+        });
+
+        function action(){
+            if(!$pinataWrap.classList.contains("active")){
+                $pinataWrap.classList.add("active");
+                setTimeout(() => {
+                    $pinataWrap.classList.remove("active");
+                }, 2000);
+            }
+
+        }
+
+    </script>
+</body>
+</html>
