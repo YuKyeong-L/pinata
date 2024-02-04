@@ -17,14 +17,18 @@
                 </div>
                 <div class="candy"></div>
             </div>
-            <!-- <p class="result"></p> -->
+            <button type="button" class="btn-replay"></button>
         </div>
+        
     </div>
+    <div class="cursor"></div>
 
     <script>
         const $pinataWrap = document.querySelector(".pinata__wrap");
         const $pinata = document.querySelector(".pinata");
         const $candy = document.querySelector(".candy");
+        const $btnReplay = document.querySelector(".btn-replay");
+        const mouseCursor = document.querySelector(".cursor");
 
         let count = 0;
         $pinata.addEventListener("click",function(){
@@ -42,11 +46,24 @@
             } else if(count === 30){
                 $pinataWrap.classList.add("active");
                 $pinata.classList.remove("action-2");
-                $pinata.classList.add("action-3");
+                $pinata.classList.add("break");
                 $candy.classList.add("action-3");
                 $pinataWrap.classList.remove("active");
+                setTimeout(() => {
+                    $btnReplay.style.display = "block";
+                }, 3000);
 
             }
+            if(count >= 30){
+                swing();
+
+            }
+
+            // cursor action
+            mouseCursor.classList.add("action");
+            setTimeout(() => {
+                mouseCursor.classList.remove("action");
+            }, 300);
         });
 
         function action(){
@@ -58,6 +75,38 @@
             }
 
         }
+        function swing(){
+            if(!$pinata.classList.contains("action-3")){
+                $pinata.classList.add("action-3");
+                setTimeout(() => {
+                    $pinata.classList.remove("action-3");
+                }, 2000);
+            }
+
+        }
+
+
+        // mouse cursor
+        //window 객체에 scroll & mouse 이벤트를 추가하고 cursor함수 실행되도록 함
+        window.addEventListener("scroll", cursor);
+        window.addEventListener("mousemove", cursor);
+        //커스텀 커서의 left값과 top값을 커서의 XY좌표값과 일치시킴
+        function cursor(e) {
+            mouseCursor.style.left = (e.pageX - 15) + "px";
+            mouseCursor.style.top = (e.pageY - 15) + "px";
+        }
+
+        $btnReplay.addEventListener("click",function(){
+            window.location.reload();
+        })
+        $btnReplay.addEventListener("mouseenter",function(){
+            mouseCursor.style.display = "none";
+            document.querySelector("html").style.cursor = "default";
+        });
+        $btnReplay.addEventListener("mouseleave",function(){
+            mouseCursor.style.display = "block";
+            document.querySelector("html").style.cursor = "none";
+        });
 
     </script>
 </body>
